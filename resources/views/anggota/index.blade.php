@@ -32,6 +32,8 @@
                     </div>
                 </div>
 
+            
+
                 {{-- Dropdown Pos Damkar --}}
                 <div class="input-group w-30">
                     <select name="pos_damkar_id" class="form-control">
