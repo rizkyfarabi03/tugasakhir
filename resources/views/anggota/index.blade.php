@@ -19,23 +19,26 @@
         </div>
     @endif
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <form method="GET" action="{{ route('anggota.index') }}" class="form-inline w-100">
-            <div class="d-flex gap-2 align-items-center w-100">
+    <div class="row mb-3 g-2">
+
+    {{-- Form Filter --}}
+    <div class="col-12 col-lg-7">
+        <form method="GET" action="{{ route('anggota.index') }}">
+            <div class="row g-2">
                 {{-- Input Pencarian --}}
-                <div class="input-group w-50">
-                    <input name="search" value="{{ request('search') }}" class="form-control form-control-sidebar" type="search" placeholder="Cari Anggota..." aria-label="Search">
-                    <div class="input-group-append">
+                <div class="col-12 col-md-6">
+                    <div class="input-group">
+                        <input name="search" value="{{ request('search') }}" 
+                               class="form-control" type="search" 
+                               placeholder="Cari Anggota..." aria-label="Search">
                         <button class="btn btn-sidebar" type="submit">
                             <i class="fas fa-search fa-fw"></i>
                         </button>
                     </div>
                 </div>
 
-            
-
                 {{-- Dropdown Pos Damkar --}}
-                <div class="input-group w-30">
+                <div class="col-12 col-md-4">
                     <select name="pos_damkar_id" class="form-control">
                         <option value="">-- Semua Pos Damkar --</option>
                         @foreach($damkars as $pos)
@@ -47,16 +50,17 @@
                 </div>
 
                 {{-- Tombol Submit --}}
-                <div class="input-group-append">
+                <div class="col-12 col-md-2 d-grid">
                     <button class="btn btn-primary" type="submit">
                         <i class="fas fa-filter"></i> Filter
                     </button>
                 </div>
             </div>
         </form>
+    </div>
 
-        {{-- Tombol Export --}}
-    <div class="col-md-2 d-flex gap-2">
+    {{-- Tombol Export --}}
+    <div class="col-6 col-lg-2 d-grid d-lg-flex gap-2">
         <a href="{{ route('anggota.export.excel') }}" class="btn btn-success flex-fill">
             <i class="fas fa-file-excel"></i> Excel
         </a>
@@ -65,13 +69,14 @@
         </a> --}}
     </div>
 
-        {{-- Tombol Tambah Data --}}
-        <div class="col-md-3 text-right">
-            <a href="{{ route('anggota.create') }}" class="btn btn-primary w-50">
-                <i class="fas fa-plus me-1"></i> Tambah Data
-            </a>
-        </div>
+    {{-- Tombol Tambah Data --}}
+    <div class="col-6 col-lg-3 d-grid text-lg-end">
+        <a href="{{ route('anggota.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i> Tambah Data
+        </a>
     </div>
+</div>
+
 
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
