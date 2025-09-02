@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +13,7 @@
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="AdminLTE/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="AdminLTE/dist/css/adminlte.min.css">
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -33,7 +34,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="" class="nav-link">SIG Pemadam Kebakaran Kota Banjarmasin</a>
+        <a href="index3.html" class="nav-link">SIG Pemadam Kebakaran Kota Banjarmasin</a>
       </li>
       {{-- <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -376,7 +377,7 @@
 <!-- overlayScrollbars -->
 <script src="AdminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="AdminLTE/dist/js/AdminLTE.js"></script>
+<script src="AdminLTE/dist/js/adminlte.js"></script>
 
 <!-- PAGE PLUGINS -->
 <!-- jQuery Mapael -->
