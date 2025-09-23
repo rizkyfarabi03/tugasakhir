@@ -33,22 +33,25 @@
 
 
 <style>
+<style>
+  /* === Base Body === */
   body {
-  margin: 0;
-  min-height: 100vh; /* biar bisa lebih tinggi dari layar */
-  background: linear-gradient(
-    to top,
-    rgba(137, 129, 129, 0.95),  /* hitam keabu-abuan */
-    rgba(50, 50, 50, 0.9),   /* abu tua */
-    rgba(80, 80, 80, 0.8),   /* abu sedang */
-    rgba(120, 120, 120, 0.7) /* abu lebih terang */
-  );
-  background-attachment: fixed; /* biar efek gradasinya tetap */
-}
+    margin: 0;
+    min-height: 100vh; /* biar bisa lebih tinggi dari layar */
+    background: linear-gradient(
+      to top,
+      rgba(137, 129, 129, 0.95),  /* hitam keabu-abuan */
+      rgba(50, 50, 50, 0.9),      /* abu tua */
+      rgba(80, 80, 80, 0.8),      /* abu sedang */
+      rgba(120, 120, 120, 0.7)    /* abu lebih terang */
+    );
+    background-attachment: fixed; /* biar efek gradasinya tetap */
+  }
 
+  /* === Map Styling === */
   #map {
     height: 600px;
-    margin: 30px auto; /* atas-bawah 30px, kiri-kanan center */
+    margin: 30px auto;
     max-width: 90%;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -59,6 +62,11 @@
     height: 100% !important;
   }
 
+  /* === Leaflet Controls === */
+  .leaflet-control.wilayah-popup {
+    margin-left: 25px !important;
+  }
+
   .leaflet-control-zoom-fullscreen.fullscreen-icon::before {
     content: "\f065"; /* Fullscreen icon FA */
     font-family: "Font Awesome 6 Free";
@@ -67,152 +75,6 @@
     color: #333;
   }
 
-  .kelurahan-popup {
-    z-index: 2000 !important;
-    background: none;
-    border: none;
-    box-shadow: none;
-  }
-
-  /* Card utama */
-.layer-card {
-  background: #fff;
-  border-radius: 12px;
-  width: 260px;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  position: relative;
-  z-index: 2100;
-
-  display: flex;
-  flex-direction: column; /* header, body, footer vertikal */
-  overflow: hidden;       /* biar animasi rapi */
-
-   max-height: 50vh; /* 🔹 Batasi tinggi di desktop */
-}
-
-/* Header */
-.layer-header {
-  background: #000000;
-  color: #fff;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px;
-  font-size: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer; /* supaya jelas bisa diklik */
-}
-
-.toggle-icon {
-  transition: transform 0.3s ease;
-}
-
-/* saat panel aktif, panah berputar */
-.layer-card.active .toggle-icon {
-  transform: rotate(180deg);
-}
-
-/* Body */
-.layer-body {
-  flex: 1;
-  overflow-y: auto;        /* scroll hanya kalau isi lebih panjang */
-  padding: 10px 15px;
-  max-height: 1000px;      /* default besar */
-  transition: max-height 0.4s ease; /* animasi slide */
-}
-
-.kelurahan-section-title {
-  font-size: 14px;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 6px;
-  color: #333;
-}
-
-/* Footer */
-.layer-footer {
-  padding: 10px;
-  text-align: center;
-  max-height: 200px;
-  transition: max-height 0.4s ease; /* animasi slide */
-}
-
-.layer-footer .btn-delete {
-  background: #e63946;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.layer-footer .btn-delete:hover {
-  background: #c92a3a;
-}
-.layer-footer .btn-delete i {
-  margin-left: 5px;
-}
-
-/* Checkbox */
-.form-check-title {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 6px;
-  color: #333;
-  text-align: left;
-}
-
-.form-check-label {
-  font-size: 14px;
-  color: #333;
-  cursor: pointer;
-  user-select: none;
-}
-.form-check-input:checked {
-  background-color: #28a745;
-  border-color: #0062cc;
-}
-
-/* Popup kelurahan */
-.kelurahan-popup.leaflet-control {
-  z-index: 2000 !important;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-.kelurahan-popup label {
-  cursor: pointer;
-}
-
-/* Mode mobile: body & footer default tertutup */
-@media (max-width: 768px) {
-  .layer-body,
-  .layer-footer {
-    max-height: 0;
-    overflow: hidden;
-  }
-  .layer-card.active .layer-body {
-    max-height: 50vh;     /* isi body bisa scroll */
-    overflow-y: auto;     /* biar kelurahan bisa discroll */
-  }
-  .layer-card.active .layer-footer {
-    max-height: 100px; /* slide down saat aktif */
-  }
-}
-
-/* 🔹 Desktop: sembunyikan ikon toggle */
-@media (min-width: 769px) {
-  .toggle-icon {
-    display: none;
-  }
-}
-
-
-  /* Custom posisi search box di atas peta */
   .leaflet-control-search {
     position: absolute !important;
     left: 50% !important;
@@ -220,8 +82,8 @@
     transform: translateX(-50%);
     z-index: 1000;
   }
-  
-    .leaflet-bottom.leaflet-right .leaflet-control-kompas {
+
+  .leaflet-bottom.leaflet-right .leaflet-control-kompas {
     margin: 10px;
   }
 
@@ -230,17 +92,158 @@
     border: none;
   }
 
-  .login-link {
-    transition: all 0.3s ease;
+  /* === Popup Kelurahan === */
+  .kelurahan-popup {
+    z-index: 2000 !important;
+    max-width: 280px;
+    background: #fff;
+    border-radius: 10px;
+    font-size: 14px;
+    overflow: hidden;
+    border: none;
+    box-shadow: none;
   }
 
-  .login-link:hover {
-    color: #ffc107 !important;
-    text-decoration: underline;
+  .kelurahan-popup .layer-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* === Card Utama === */
+  .layer-card {
+    background: #fff;
+    border-radius: 12px;
+    width: 260px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    position: relative;
+    z-index: 2100;
+    display: flex;
+    flex-direction: column; /* header, body, footer vertikal */
+    overflow: hidden;       /* biar animasi rapi */
+    max-height: 50vh;       /* Batasi tinggi di desktop */
+  }
+
+  /* Header */
+  .layer-header {
+    background: #000;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
     cursor: pointer;
   }
 
-  /* Dropdown menu global */
+  .toggle-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .layer-card.active .toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Body Filter Wilayah */
+.layer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 15px;
+  max-height: 250px; /* batas tinggi */
+  transition: max-height 0.4s ease;
+}
+/* ==== Katalog Layer ==== */
+#wilayahBody {
+  max-height: none !important;  /* jangan dibatasi */
+  overflow-y: visible !important; /* biar gak muncul scroll */
+}
+
+  .kelurahan-section-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 6px;
+    color: #333;
+  }
+
+  /* Footer */
+  .layer-footer {
+    padding: 10px;
+    text-align: center;
+    max-height: 200px;
+    transition: max-height 0.4s ease;
+    background: #f7f7f7;
+  }
+
+  .layer-footer .btn-delete {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.3s;
+  }
+  .layer-footer .btn-delete:hover {
+    background: #c82333;
+  }
+  .layer-footer .btn-delete i {
+    margin-left: 5px;
+  }
+
+  /* === Checkbox === */
+  .form-check-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #333;
+    text-align: left;
+  }
+
+  .form-check-label {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .form-check-input:checked {
+    background-color: #28a745;
+    border-color: #0062cc;
+  }
+
+  /* === Responsive === */
+  @media (max-width: 768px) {
+    .kelurahan-popup {
+      max-width: 95vw;
+      width: auto;
+      right: 5px !important;
+      top: 60px !important;
+    }
+
+    .layer-body {
+      max-height: 40vh;
+    }
+
+    .layer-footer .btn-delete {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .toggle-icon {
+      display: none;
+    }
+  }
+
+  /* === Navbar & Dropdown === */
   .navbar .dropdown-menu {
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0,0,0,0.1);
@@ -251,47 +254,44 @@
     border-color: #0d6efd;
   }
 
+  .navbar-nav .nav-link.active {
+    background-color: #28a745;
+    color: #fff !important;
+    border-radius: 5px;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background-color: #218838;
+    color: #fff !important;
+  }
+
+  /* === Buttons === */
   #resetBtn {
     background-color: #dc3545;
     border: none;
     font-weight: bold;
     border-radius: 8px;
   }
-
   #resetBtn:hover {
     background-color: #c82333;
   }
 
-  .navbar-nav .nav-link.active {
-    background-color: #28a745;
-    color: white !important;
-    border-radius: 5px;
-  }
-
-  .navbar-nav .nav-link:hover {
-    background-color: #218838;
-    color: white !important;
-  }
-
-  #btn-lokasi.active {
-    background-color: #218838;
-    border-color: #1e7e34;
-  }
-
   #btn-lokasi {
-    width: 40px;
-    height: 40px;
-    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: 8px;
+    width: auto !important;
+    height: auto !important;
   }
-
   #btn-lokasi.active {
     background-color: #1e7e34 !important;
+    border-color: #1e7e34;
   }
 
+  /* === Footer === */
   footer {
     position: fixed;
     bottom: 0;
@@ -305,7 +305,7 @@
     z-index: 999;
   }
 
-  /* === Tambahan khusus dropdown Filter Wilayah === */
+  /* === Dropdown Filter Wilayah === */
   .dropdown-menu h6 {
     font-size: 14px;
     font-weight: bold;
@@ -326,6 +326,126 @@
     color: #333;
     cursor: pointer;
   }
+
+  /* === Login Link === */
+  .login-link {
+    transition: all 0.3s ease;
+  }
+  .login-link:hover {
+    color: #ffc107 !important;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+</style>
+
+<style>
+/* Tombol ? tengah atas peta */
+.help-btn {
+  position: absolute;
+  top: 10px;
+  left: 50%;                  /* pindah ke tengah */
+  transform: translateX(-50%); /* biar benar-benar center */
+  background: #006400;
+  color: #fff;
+  border-radius: 50%;
+  padding: 10px 12px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+
+/* Popup petunjuk utama (tengah layar) */
+.help-popup {
+  position: absolute;
+  top: 70px;                 /* lebih dekat ke atas */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px 14px;        /* padding lebih kecil */
+  width: 440px;              /* diperkecil dari 340px */
+  max-width: 100%;            /* lebih ramping di layar kecil */
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-size: 13px;           /* lebih kecil */
+  line-height: 1.6;          /* rapat tapi tetap terbaca */
+}
+
+.help-popup h5 {
+  margin-bottom: 10px;
+  color: #006400;
+  font-weight: bold;
+}
+
+.help-popup ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.help-popup .close-btn {
+  margin-top: 10px;
+  background: #006400;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+/* 🔹 Tooltip petunjuk kecil (untuk ikon peta) */
+.help-popup.tooltip {
+  padding: 8px 12px;
+  width: auto;
+  max-width: 220px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+/* Tooltip posisi kanan */
+.help-popup.right {
+  top: 50%;
+  left: 110%;
+  transform: translateY(-50%);
+}
+
+/* Tooltip posisi atas */
+.help-popup.top {
+  bottom: 110%;
+  left: 50%;
+  top: auto;
+  transform: translateX(-50%);
+}
+
+/* Panah kecil */
+.help-popup.tooltip::after {
+  content: "";
+  position: absolute;
+  width: 0; 
+  height: 0; 
+  border-style: solid;
+}
+
+/* Panah untuk tooltip kanan */
+.help-popup.right::after {
+  top: 50%;
+  left: -6px;
+  transform: translateY(-50%);
+  border-width: 6px;
+  border-color: transparent #fff transparent transparent;
+}
+
+/* Panah untuk tooltip atas */
+.help-popup.top::after {
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-color: #fff transparent transparent transparent;
+}
+
+
 </style>
 
 <!-- Navbar -->
@@ -344,13 +464,13 @@
 
         <!-- Beranda -->
         <li class="nav-item">
-          <a class="nav-link text-white login-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}" id="nav-beranda">
+          <a class="nav-link text-white login-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}" id="nav-beranda" title="Halaman awal aplikasi ini">
             Beranda
           </a>
         </li>
 
         <!-- Dropdown Kecamatan -->
-        <li class="nav-item dropdown">
+        {{-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white login-link" href="#" id="kecamatanDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Wilayah
           </a>
@@ -375,19 +495,29 @@
               <hr>
               <button class="btn btn-secondary btn-sm mt-3 w-100" id="resetBtn">Reset Semua</button>
           </div>
+        </li> --}}
+
+        <!-- Menu Wilayah -->
+        <li class="nav-item">
+          <a class="nav-link text-white login-link {{ request()->routeIs('home') ? 'active' : '' }}"
+            href="{{ route('home') }}"
+            id="nav-beranda"
+            title="Halaman Icon Damkar dan Segmentasi Wilayah">
+            Wilayah
+          </a>
         </li>
 
 
         <!-- Data Damkar -->
         <li class="nav-item">
-          <a class="nav-link text-white login-link {{ request()->routeIs('statistik.index') ? 'active' : '' }}" href="{{ route('statistik.index') }}" id="nav-damkar">
+          <a class="nav-link text-white login-link {{ request()->routeIs('statistik.index') ? 'active' : '' }}" href="{{ route('statistik.index') }}" id="nav-damkar"title="Akses untuk menuju statistik dan data anggota">
             Data Damkar
           </a>
         </li>
 
         <!-- Kontak -->
         <li class="nav-item">
-          <a class="nav-link text-white login-link" href="{{ url('/instagram') }}" target="_blank" rel="noopener noreferrer" id="nav-kontak">
+          <a class="nav-link text-white login-link" href="{{ url('/instagram') }}" target="_blank" rel="noopener noreferrer" id="nav-kontak" title="Akses untuk menuju sosmed disdamkardat">
             Kontak
           </a>
         </li>
@@ -399,19 +529,22 @@
           </a>
         </li> --}}
 
-        <!-- Lokasi Saya (Ikon Saja dengan Tooltip) -->
+        <!-- Lokasi Damkar Terdekat -->
         <li class="nav-item">
-          <button id="btn-lokasi" class="btn btn-success ms-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Lokasi Saya">
-            <i class="fas fa-map-marker-alt"></i>
+          <button id="btn-lokasi" class="btn btn-success ms-2 d-flex align-items-center" 
+                  data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mencari lokasi Damkar Terdekat">
+            <i class="fas fa-map-marker-alt me-2"></i> 
+            <span>Lokasi Damkar Terdekat</span>
           </button>
         </li>
+
 
 
       </ul>
 
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link text-white login-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}" id="nav-login">
+          <a class="nav-link text-white login-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}" id="nav-login" title="Akses admin untuk mengelola data">
             Masuk
           </a>
         </li>
@@ -427,9 +560,46 @@
 </div>
 
 
+  <!-- Peta -->
+<div id="map">
+<div id="helpBtn" class="help-btn" onclick="toggleHelp()">
+ <i class="fa fa-question-circle"></i> 
+</div>
 
-    <!-- Peta -->
-<div id="map"></div>
+<!-- Popup Petunjuk -->
+<div id="helpPopup" class="help-popup">
+  <h5>📖 Petunjuk Penggunaan Peta Damkar</h5>
+  <ul>
+    <li>Gunakan tombol <b>+</b> dan <b>-</b> untuk <b>zoom in/out</b> peta.</li>
+    <li>Klik ikon <b>⛶</b> untuk membuka <b>Fullscreen</b> peta.</li>
+    <li>Gunakan Fitur  <b>cari dikiri atas</b> untuk <b>mencari damkar</b> di peta.</li>
+    <li>Klik ikon di kanan atas
+      <span class="leaflet-control-layers-toggle" 
+            style="display:inline-block; width:20px; height:20px; vertical-align:middle;"></span> 
+      untuk <b>ganti mode peta</b> (OSM, Google Maps, Satellite).
+    </li>
+    <li>Klik marker <b>🚒 Pos Damkar</b> untuk melihat detail lokasi & informasi.</li>
+    <li>Pop Up <b> Katalog Layer</b> dibagian kiri peta untuk memilih dan menampilkan icon damkar dan peta Kecamatan di Banjarmasin.</li>
+    <li>Pakai <b> Filter Kelurahan</b> untuk menampilkan batas wilayah tiap Kelurahan.<b>(klik salah satu kecamatan dulu baru pop ini tampil)</b></li>
+    <li>Gunakan tombol <b>🔄 Reset</b> untuk kembali ke mode peta awal.</li>     
+    <li>Buka menu <b> Wilayah</b> untuk menampilkan batas Kecamatan & Kelurahan.</li>
+    <li>Buka menu <b>Data Damkar</b> untuk melihat daftar Pos Damkar.</li>
+    <li>Buka menu <b>Kontak</b> untuk terhubung ke <b>Sosial Media Disdamkarmat</b>.</li>
+    <li>Aktifkan lokasi Anda untuk menampilkan <b>Pos Damkar terdekat</b> dari posisi saat ini.</li>
+    <li>Buka menu <b> Masuk</b> untuk login ke Halaman Admin.</li>
+
+  </ul>
+  <button onclick="toggleHelp()" class="close-btn">Tutup</button>
+</div>
+
+
+
+
+</div>
+
+<!-- Tempatkan di atas peta -->
+<div class="wilayah-popup"></div>
+
 
 <script>
   var map = L.map('map', {
@@ -442,37 +612,125 @@
   });
 
   // Basemap options
-  const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap contributors'
-  });
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; OpenStreetMap contributors'
+});
 
-  const googleStreets = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    maxZoom: 20,
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-    attribution: '&copy; Google Maps'
-  });
+const googleStreets = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+  maxZoom: 20,
+  subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+  attribution: '&copy; Google Maps'
+});
 
-  const googleSat = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-    maxZoom: 20,
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-    attribution: '&copy; Google Satellite'
-  });
+const googleSat = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+  maxZoom: 20,
+  subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+  attribution: '&copy; Google Satellite'
+});
 
-  // Set default layer
-  osm.addTo(map);
+// Set default layer
+osm.addTo(map);
 
-  // Add Layer control
-  const baseLayers = {
-    "OpenStreetMap": osm,
-    "Google Maps": googleStreets,
-    "Google Satellite": googleSat
-  };
+// Add Layer control
+const baseLayers = {
+  "OpenStreetMap": osm,
+  "Google Maps": googleStreets,
+  "Google Satellite": googleSat
+};
 
- const layerControl = L.control.layers(baseLayers, null, {
-    position: 'topright',
-    collapsed: true // collapsed agar jadi tombol kecil
-  }).addTo(map);
+const layerControl = L.control.layers(baseLayers, null, {
+  position: 'topright',
+  collapsed: true
+}).addTo(map);
+
+// =============== Petunjuk Mode Peta ===============
+const InfoControl = L.control({ position: "topright" });
+
+InfoControl.onAdd = function (map) {
+  const div = L.DomUtil.create("div", "map-hint");
+  div.innerHTML = `
+    <div style="
+      background: rgba(0,0,0,0.7); 
+      color: #fff; 
+      padding: 6px 10px; 
+      border-radius: 6px; 
+      font-size: 13px; 
+      max-width: 200px;
+    ">
+      Klik ikon layer (<i class="fa fa-layer-group"></i>) di kanan atas untuk ganti mode peta.
+      <br><small></small>
+    </div>
+  `;
+  return div;
+};
+InfoControl.addTo(map);
+
+// =============== Petunjuk + Tombol Reset (Custom Control) ===============
+const InfoResetControl = L.Control.extend({
+  options: { position: "topright" }, // posisinya permanen di kanan atas
+
+  onAdd: function (map) {
+    const container = L.DomUtil.create("div", "leaflet-bar map-hint");
+
+    // styling container
+    container.style.display = "flex";
+    container.style.alignItems = "center";
+    container.style.background = "rgba(0,0,0,0.7)";
+    container.style.color = "#fff";
+    container.style.padding = "6px 10px";
+    container.style.borderRadius = "6px";
+    container.style.fontSize = "13px";
+    container.style.marginTop = "5px";
+
+    // teks petunjuk
+    const text = L.DomUtil.create("div", "", container);
+    text.innerHTML = `
+      Klik ikon di sebelah kanan ini <br>
+      untuk kembali ke mode peta awal.
+    `;
+    text.style.flex = "1";
+
+    // tombol reset
+    const button = L.DomUtil.create("a", "", container);
+    button.innerHTML = '<i class="fas fa-rotate-left"></i>';
+    button.href = "#";
+    button.title = "Kembali ke tampilan peta awal (OpenStreetMap)";
+    button.style.background = "#28a745";
+    button.style.color = "#fff";
+    button.style.padding = "6px 8px";
+    button.style.borderRadius = "4px";
+    button.style.marginLeft = "8px";
+
+    // klik reset
+    L.DomEvent.on(button, "click", function (e) {
+      L.DomEvent.stopPropagation(e);
+      L.DomEvent.preventDefault(e);
+
+      // 🔹 Hapus hanya basemap yang aktif
+      map.eachLayer(function (layer) {
+        if (layer instanceof L.TileLayer) {
+          map.removeLayer(layer);
+        }
+      });
+
+      // 🔹 Tambahkan default OSM
+      osm.addTo(map);
+
+      // 🔹 Pastikan layerControl tetap ada
+      // if (!map.hasLayer(layerControl)) {
+      //   layerControl.addTo(map);
+      // }
+    });
+
+    return container;
+  }
+});
+
+// Tambahkan ke map
+map.addControl(new InfoResetControl());
+
+
 
 
   // GeoJSON load
@@ -558,7 +816,7 @@
       onAdd: function () {
         var div = L.DomUtil.create('div', 'search-box');
         div.innerHTML = `
-          <input type="text" id="searchInput" class="form-control form-control-sm" placeholder="Cari Pos Damkar...">
+          <input type="text" id="searchInput" class="form-control form-control-sm" placeholder="Cari Pos Damkar..."title="Cari lokasi damkar yang diinginkan">
         `;
         return div;
       }
@@ -586,136 +844,343 @@
 
 
   function filterMarkers() {
-    const selectedKecamatan = Array.from(document.querySelectorAll('.filter-wilayah:checked')).map(cb => cb.value);
-    const damkarEnabled = document.getElementById('filterDamkar')?.checked;
+  const selectedKecamatan = Array.from(document.querySelectorAll('.filter-wilayah:checked')).map(cb => cb.value);
+  const damkarEnabled = document.getElementById('filterDamkar')?.checked;
 
-    allMarkers.forEach(marker => {
-      if (marker.kategori === 'damkar') {
-        if (damkarEnabled && selectedKecamatan.includes(marker.kecamatan)) {
-          map.addLayer(marker);
-        } else {
-          map.removeLayer(marker);
-        }
-      }
-    });
-  }
-
-
-  function filterWilayah() {
-    const allWilayahCheckboxes = document.querySelectorAll('.filter-wilayah');
-    const selected = Array.from(allWilayahCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
-    const totalSelected = selected.length;
-    const totalWilayah = allWilayahCheckboxes.length;
-
-    let lastSelectedKecamatan = null;
-
-    for (let kec in geojsonLayers) {
-        const wilayahChecked = selected.includes(kec);
-        if (wilayahChecked) {
-            map.addLayer(geojsonLayers[kec]);
-            lastSelectedKecamatan = kec;
-        } else {
-            map.removeLayer(geojsonLayers[kec]);
-        }
+  allMarkers.forEach(marker => {
+    if(marker.kategori==='damkar'){
+      if(damkarEnabled && (selectedKecamatan.length===0 || selectedKecamatan.includes(marker.kecamatan))){
+        map.addLayer(marker);
+      } else map.removeLayer(marker);
     }
-
-    // Zoom map
-    if (totalSelected === 0 || totalSelected === totalWilayah) {
-        map.setView(defaultView.center, defaultView.zoom);
-    } else if (lastSelectedKecamatan && kecamatanBounds[lastSelectedKecamatan]) {
-        map.fitBounds(kecamatanBounds[lastSelectedKecamatan]);
-    }
-
-    // Tampilkan panel kelurahan hanya kalau ada 1 kecamatan dipilih
-    const kelurahanPanel = document.querySelector('.kelurahan-popup');
-    if (selected.length === 1 && kelurahanFilesMap[selected[0]]) {
-        if (kelurahanPanel) kelurahanPanel.style.display = 'block';
-        setupKelurahanCheckboxes(selected[0]);
-    } else {
-        if (kelurahanPanel) kelurahanPanel.style.display = 'none';
-        const popupContainer = document.querySelector('.kelurahan-popup .kelurahan-list');
-        if (popupContainer) popupContainer.innerHTML = '';
-        for (let file in kelurahanLayerMap) {
-            map.removeLayer(kelurahanLayerMap[file]);
-        }
-    }
-
-    // Filter damkar sesuai kecamatan
-    filterMarkers();
+  });
 }
 
-// Sembunyikan panel saat awal load
-document.addEventListener("DOMContentLoaded", function () {
-    const kelurahanPanel = document.querySelector('.kelurahan-popup');
-    if (kelurahanPanel) kelurahanPanel.style.display = 'none';
+
+// --- Inisialisasi global supaya tidak error ---
+window.kelurahanLayerMap = window.kelurahanLayerMap || {};
+window.kelurahanFilesMap = window.kelurahanFilesMap || {
+    'Banjarmasin Timur': [
+      "Banua Anyar.geojson",
+      "Karang Mekarr.geojson",
+      "Kebun Bunga.geojson",
+      "Kuripan.geojson",
+      "Pekapuran Raya.geojson",
+      "Pemurus Luar.geojson",
+      "Pengambangan.geojson",
+      "Sungai Bilu.geojson",
+      "Sungai Lulut.geojson"
+    ],
+    'Banjarmasin Barat': [
+      "Basirih.geojson",
+      "Belitung Selatan.geojson",
+      "Belitung Utara.geojson",
+      "Kuin Cerucuk.geojson",
+      "Kuin Selatan.geojson",
+      "Pelambuan.geojson",
+      "Telaga Biru.geojson",
+      "Telawang.geojson",
+      "Teluk Tiram.geojson"
+    ],
+    'Banjarmasin Utara': [
+      "Alalak Selatan.geojson",
+      "Alalak Tengah.geojson",
+      "Alalak Utara.geojson",
+      "Antasan Kecil Timur.geojson",
+      "Kuin Utara.geojson",
+      "Pangeran.geojson",
+      "Sungai Andai.geojson",
+      "Sungai Jingah.geojson",
+      "Sungai Miai.geojson",
+      "Surgi Mufti.geojson"
+    ],
+    'Banjarmasin Selatan': [
+      "Basirih Selatan.geojson",
+      "Kelayan Barat.geojson",
+      "Kelayan Dalam.geojson",
+      "Kelayan Selatan.geojson",
+      "Kelayan Tengah.geojson",
+      "Kelayan Timur.geojson",
+      "Mantuil.geojson",
+      "Murung Raya.geojson",
+      "Pekauman.geojson",
+      "Pemurus Baru.geojson",
+      "Pemurus Dalam.geojson",
+      "Tanjung Pagar.geojson"
+    ],
+    'Banjarmasin Tengah': [
+      "Antasan Besar.geojson",
+      "Gadang.geojson",
+      "Kelayan Luar.geojson",
+      "Kertak Baru Ilir.geojson",
+      "Kertak Baru Ulu.geojson",
+      "Mawar.geojson",
+      "Melayu.geojson",
+      "Pasar Lama.geojson",
+      "Pekapuran Laut.geojson",
+      "Seberang Mesjid.geojson",
+      "Sungai Baru.geojson",
+      "Teluk Dalam.geojson"
+    ]
+  };
+
+  const kelurahanColors = [
+    '#FF7F7F', '#FFBF00', '#90EE90', '#87CEFA',
+    '#DDA0DD', '#FFA07A', '#B0C4DE', '#E6E6FA',
+    '#F08080', '#98FB98', '#D8BFD8', '#FFD700'
+  ];
+
+
+
+// =================== FUNGSI FILTER ===================
+function filterWilayah(){
+  const selected = Array.from(document.querySelectorAll('.filter-wilayah:checked')).map(cb=>cb.value);
+  let lastSelected = null;
+
+  // tampilkan/sembunyi layer kecamatan
+  for(let kec in geojsonLayers){
+    if(selected.includes(kec)){ map.addLayer(geojsonLayers[kec]); lastSelected=kec; }
+    else map.removeLayer(geojsonLayers[kec]);
+  }
+
+  // zoom otomatis
+  if(selected.length===0 || selected.length===document.querySelectorAll('.filter-wilayah').length)
+    map.setView(defaultView.center, defaultView.zoom);
+  else if(lastSelected && kecamatanBounds[lastSelected])
+    map.fitBounds(kecamatanBounds[lastSelected]);
+
+  // tampilkan popup kelurahan jika 1 kecamatan dipilih
+  const kelurahanPanel = document.querySelector('.kelurahan-popup');
+  if(selected.length===1 && window.kelurahanFilesMap[selected[0]]){
+    if(kelurahanPanel) kelurahanPanel.style.display='block';
+    setupKelurahanCheckboxes(selected[0]);
+  } else {
+    if(kelurahanPanel) kelurahanPanel.style.display='none';
+    const listContainer = document.querySelector('.kelurahan-popup .kelurahan-list');
+    if(listContainer) listContainer.innerHTML='';
+    for(let file in window.kelurahanLayerMap) map.removeLayer(window.kelurahanLayerMap[file]);
+  }
+
+  filterMarkers();
+}
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   // centang semua kecamatan default
+//   document.querySelectorAll('.filter-wilayah').forEach(cb => cb.checked = true);
+
+//   // centang damkar default
+//   document.getElementById('filterDamkar').checked = true;
+
+//   // panggil filterWilayah -> otomatis manggil filterMarkers()
+//   filterWilayah();
+// });
+
+// // Event listener kecamatan
+// document.querySelectorAll('.filter-wilayah').forEach(cb => {
+//     cb.addEventListener('change', filterWilayah);
+// });
+
+// // Tombol reset
+// document.getElementById('resetBtn').addEventListener('click', function () {
+//     document.querySelectorAll('.filter-wilayah').forEach(cb => cb.checked = false);
+//     filterWilayah();
+// });
+
+// =================== LEAFLET CONTROL ===================
+L.Control.Wilayah = L.Control.extend({
+  onAdd: function (map) {
+    const container = L.DomUtil.create("div", "leaflet-control wilayah-popup");
+
+    container.innerHTML = `
+      <div class="layer-card" title="Fitur untuk menampilkan icon dan wilayah">
+        <!-- Header -->
+        <div class="layer-header" onclick="toggleWilayahPanel()">
+          <span>Katalog Layer</span>
+          <i class="fa fa-map-marker-alt"></i>
+          <i class="fa fa-chevron-down toggle-icon"></i>
+        </div>
+
+        <!-- Body -->
+        <div class="layer-body" id="wilayahBody">
+          <!-- Filter ikon -->
+          <div class="form-check">
+            <div class="form-check-title">Filter Ikon</div>
+            <input class="form-check-input" type="checkbox" id="filterDamkar" checked>
+            <label class="form-check-label" for="filterDamkar">Tampilkan Damkar</label>
+          </div>
+
+          <hr>
+
+          <!-- Pilih semua -->
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="wilayahSelectAllMap">
+            <label class="form-check-label fw-bold" for="wilayahSelectAllMap">Pilih Semua</label>
+          </div>
+
+          <hr>
+
+          <!-- Daftar wilayah -->
+          <div class="wilayah-list">
+            ${["Barat", "Selatan", "Tengah", "Timur", "Utara"]
+              .map((kec, i) => {
+                const id = `wilayahMap-${i}`;
+                return `
+                  <div class="form-check">
+                    <input class="form-check-input filter-wilayah" type="checkbox" 
+                          value="Banjarmasin ${kec}" id="${id}" checked>
+                    <label class="form-check-label" for="${id}">
+                      Banjarmasin ${kec}
+                    </label>
+                  </div>
+                `;
+              })
+              .join("")}
+          </div>
+          <hr>
+
+          <!-- Tombol reset -->
+          <button class="btn btn-sm btn-danger w-100 mt-2" id="resetWilayahBtn">
+            <i class="fa fa-trash"></i> Reset Semua
+          </button>
+        </div>
+      </div>
+    `;
+
+    // stop propagation biar klik gak ganggu map
+    L.DomEvent.disableClickPropagation(container);
+
+    // === EVENT HANDLER ===
+    const filterDamkar = container.querySelector("#filterDamkar");
+    const selectAll = container.querySelector("#wilayahSelectAllMap");
+    const wilayahChecks = container.querySelectorAll(".filter-wilayah");
+
+    // Damkar checkbox
+    filterDamkar.addEventListener("change", () => {
+      filterMarkers(); // 🔥 trigger ulang filter damkar
+    });
+
+    // Reset semua
+    container.querySelector("#resetWilayahBtn").addEventListener("click", () => {
+      wilayahChecks.forEach(cb => cb.checked = false);
+      selectAll.checked = false;
+        // uncheck filter damkar juga
+      const filterDamkar = container.querySelector("#filterDamkar");
+      if (filterDamkar) filterDamkar.checked = false;
+
+      // refresh ulang
+      filterWilayah();
+      filterMarkers();
+    });
+
+
+    // Pilih semua
+    selectAll.addEventListener("change", function () {
+      wilayahChecks.forEach(cb => cb.checked = this.checked);
+      filterWilayah();
+      filterMarkers();
+    });
+
+    // Checkbox per wilayah
+    wilayahChecks.forEach(cb => {
+      cb.checked = true; // ✅ centang semua default
+      cb.addEventListener("change", function () {
+        if (!this.checked) {
+          selectAll.checked = false;
+        } else if ([...wilayahChecks].every(c => c.checked)) {
+          selectAll.checked = true;
+        }
+        filterWilayah();
+        filterMarkers();
+      });
+    });
+
+    // === Inisialisasi awal ===
+    selectAll.checked = true;
+    wilayahChecks.forEach(cb => cb.checked = true);
+
+    // langsung render default layer + marker
+setTimeout(() => {
+  filterWilayah();
+  filterMarkers();   // ✅ pastikan damkar langsung muncul
+}, 0);
+
+    
+
+    return container;
+  },
+
+  onRemove: function (map) {
+    // opsional cleanup
+  },
 });
 
-// Event listener kecamatan
-document.querySelectorAll('.filter-wilayah').forEach(cb => {
-    cb.addEventListener('change', filterWilayah);
-});
+// Register ke Leaflet
+L.control.wilayah = function (opts) {
+  return new L.Control.Wilayah(opts);
+};
 
-// Tombol reset
-document.getElementById('resetBtn').addEventListener('click', function () {
-    document.querySelectorAll('.filter-wilayah').forEach(cb => cb.checked = false);
-    filterWilayah();
-});
+// Tambahkan ke map
+L.control.wilayah({ position: "topleft" }).addTo(map);
+
+// Toggle tampil/hidden body
+function toggleWilayahPanel() {
+  const body = document.getElementById("wilayahBody");
+  if (!body) return;
+  body.style.display = body.style.display === "none" ? "block" : "none";
+}
+
 
 // --- FUNGSI RENDER PANEL KELURAHAN ---
-function renderKelurahanPanel() {
-  const container = document.querySelector('.kelurahan-popup');
-  if (!container) return;
+// function renderKelurahanPanel() {
+//   const container = document.querySelector('.kelurahan-popup');
+//   if (!container) return;
 
-  container.innerHTML = `
-    <div class="layer-card">
-      <div class="layer-header" onclick="toggleLayer()">
-        <span>Katalog Layer</span>
-        <i class="fa fa-layer-group"></i>
-         <i class="fa fa-chevron-down toggle-icon"></i>
-      </div>
+//   container.innerHTML = `
+//     <div class="layer-card">
+//       <div class="layer-header" onclick="toggleLayer()">
+//         <span>Filter Kelurahan</span>
+//         <i class="fa fa-layer-group"></i>
+//          <i class="fa fa-chevron-down toggle-icon"></i>
+//       </div>
 
-      <div class="layer-body" id="layerBody">
-        <div class="form-check">
-          <div class="form-check-title">Filter Ikon</div>
-          <input class="form-check-input" type="checkbox" id="filterDamkar">
-          <label class="form-check-label" for="filterDamkar">Tampilkan Damkar</label>
-        </div>
+//       <div class="layer-body" id="layerBody">
+        
 
-        <div class="kelurahan-section">
-          <div class="kelurahan-section-title" id="kelurahan-title">Kelurahan</div>
-          <div class="kelurahan-list"></div>
-        </div>
-      </div>
+//         <div class="kelurahan-section">
+//           <div class="kelurahan-section-title" id="kelurahan-title">Kelurahan</div>
+//           <div class="kelurahan-list"></div>
+//         </div>
+//       </div>
 
-      <div class="layer-footer" id="layerFooter">
-        <button class="btn-delete" onclick="hapusSemuaFilter()">
-          <i class="fa fa-trash"></i> Bersihkan Semua
-        </button>
-      </div>
-    </div>
+//       <div class="layer-footer" id="layerFooter">
+//         <button class="btn-delete" onclick="hapusSemuaFilter()">
+//           <i class="fa fa-trash"></i> Bersihkan Semua
+//         </button>
+//       </div>
+//     </div>
 
-  `;
+//   `;
 
-  const damkarCb = document.getElementById('filterDamkar');
-  if (damkarCb) {
-    damkarCb.addEventListener('change', filterMarkers);
-  }
-}
+//   const damkarCb = document.getElementById('filterDamkar');
+//   if (damkarCb) {
+//     damkarCb.addEventListener('change', filterMarkers);
+//   }
+// }
 
 
 // --- FUNGSI HAPUS SEMUA FILTER ---
-function hapusSemuaFilter() {
-    // Uncheck semua filter ikon & kelurahan
-  document.querySelectorAll('#filterDamkar, .kelurahan-checkbox').forEach(cb => {
-    cb.checked = false;
-  });
+// function hapusSemuaFilter() {
+//     // Uncheck semua filter ikon & kelurahan
+//   document.querySelectorAll('#filterDamkar, .kelurahan-checkbox').forEach(cb => {
+//     cb.checked = false;
+//   });
 
-  // Jalankan ulang filter
-  if (typeof filterMarkers === "function") filterMarkers();
-  if (typeof filterWilayah === "function") filterWilayah();
+//   // Jalankan ulang filter
+//   if (typeof filterMarkers === "function") filterMarkers();
+//   if (typeof filterWilayah === "function") filterWilayah();
 
-  console.log("🔄 Filter ikon & kelurahan sudah direset");
-}
+//   console.log("🔄 Filter ikon & kelurahan sudah direset");
+// }
 
 
 
@@ -790,102 +1255,79 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <script>
-  // --- kontrol popup kelurahan ---
-  const kelurahanPopupControl = L.control({ position: 'topright' });
+// --- kontrol popup kelurahan ---
+const kelurahanPopupControl = L.control({ position: 'topright' });
 
-  kelurahanPopupControl.onAdd = function (map) {
-    const div = L.DomUtil.create('div', 'kelurahan-popup leaflet-bar leaflet-control shadow-sm');
-    div.style.display = 'none'; // 🔹 Awal tersembunyi
-    
-    div.innerHTML = `
-      <div class="kelurahan-section">
-        <div class="kelurahan-section-title">Filter Ikon</div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="filterDamkar">
-          <label class="form-check-label" for="filterDamkar">Tampilkan Damkar</label>
+kelurahanPopupControl.onAdd = function (map) {
+  // Buat elemen div Leaflet control
+  const div = L.DomUtil.create('div', 'kelurahan-popup leaflet-bar leaflet-control shadow-sm');
+  div.style.display = 'block'; // Bisa diubah ke 'none' jika ingin awal tersembunyi
+
+   // 🔹 Default tersembunyi
+  div.style.display = 'none';
+  // Isi HTML gabungan
+  div.innerHTML = `
+    <div class="layer-card">
+      <div class="layer-header" onclick="toggleKelurahanPanel()">
+        <span>Filter Kelurahan</span>
+        <i class="fa fa-layer-group"></i>
+        <i class="fa fa-chevron-down toggle-icon" id="kelurahanIcon"></i>
+      </div>
+
+      <div class="layer-body" id="kelurahanBody">
+
+        <div class="kelurahan-section">
+          <div class="kelurahan-section-title" id="kelurahan-title">Kelurahan</div>
+          <div class="kelurahan-list"></div>
         </div>
       </div>
-      <div class="kelurahan-section">
-        <div class="kelurahan-section-title" id="kelurahan-title">Kelurahan</div>
-        <div class="kelurahan-list"></div>
-      </div>
-    `;
-    return div;
-  };
 
-  kelurahanPopupControl.addTo(map);
+      
+    </div>
+  `;
 
-  const kelurahanLayerMap = {};
-  const kelurahanFilesMap = {
-    'Banjarmasin Timur': [
-      "Banua Anyar.geojson",
-      "Karang Mekarr.geojson",
-      "Kebun Bunga.geojson",
-      "Kuripan.geojson",
-      "Pekapuran Raya.geojson",
-      "Pemurus Luar.geojson",
-      "Pengambangan.geojson",
-      "Sungai Bilu.geojson",
-      "Sungai Lulut.geojson"
-    ],
-    'Banjarmasin Barat': [
-      "Basirih.geojson",
-      "Belitung Selatan.geojson",
-      "Belitung Utara.geojson",
-      "Kuin Cerucuk.geojson",
-      "Kuin Selatan.geojson",
-      "Pelambuan.geojson",
-      "Telaga Biru.geojson",
-      "Telawang.geojson",
-      "Teluk Tiram.geojson"
-    ],
-    'Banjarmasin Utara': [
-      "Alalak Selatan.geojson",
-      "Alalak Tengah.geojson",
-      "Alalak Utara.geojson",
-      "Antasan Kecil Timur.geojson",
-      "Kuin Utara.geojson",
-      "Pangeran.geojson",
-      "Sungai Andai.geojson",
-      "Sungai Jingah.geojson",
-      "Sungai Miai.geojson",
-      "Surgi Mufti.geojson"
-    ],
-    'Banjarmasin Selatan': [
-      "Basirih Selatan.geojson",
-      "Kelayan Barat.geojson",
-      "Kelayan Dalam.geojson",
-      "Kelayan Selatan.geojson",
-      "Kelayan Tengah.geojson",
-      "Kelayan Timur.geojson",
-      "Mantuil.geojson",
-      "Murung Raya.geojson",
-      "Pekauman.geojson",
-      "Pemurus Baru.geojson",
-      "Pemurus Dalam.geojson",
-      "Tanjung Pagar.geojson"
-    ],
-    'Banjarmasin Tengah': [
-      "Antasan Besar.geojson",
-      "Gadang.geojson",
-      "Kelayan Luar.geojson",
-      "Kertak Baru Ilir.geojson",
-      "Kertak Baru Ulu.geojson",
-      "Mawar.geojson",
-      "Melayu.geojson",
-      "Pasar Lama.geojson",
-      "Pekapuran Laut.geojson",
-      "Seberang Mesjid.geojson",
-      "Sungai Baru.geojson",
-      "Teluk Dalam.geojson"
-    ]
-  };
+  // Mencegah event klik ke peta saat interaksi dengan kontrol
+  L.DomEvent.disableClickPropagation(div);
+  L.DomEvent.disableScrollPropagation(div);
 
-  const kelurahanColors = [
-    '#FF7F7F', '#FFBF00', '#90EE90', '#87CEFA',
-    '#DDA0DD', '#FFA07A', '#B0C4DE', '#E6E6FA',
-    '#F08080', '#98FB98', '#D8BFD8', '#FFD700'
-  ];
+  return div;
+};
+
+kelurahanPopupControl.addTo(map);
+
+function toggleKelurahanPanel() {
+  const body = document.getElementById("kelurahanBody");
+  const icon = document.getElementById("kelurahanIcon");
+
+  if (!body) return;
+
+  if (body.style.display === "none" || body.style.display === "") {
+    body.style.display = "block";
+    if (icon) {
+      icon.classList.remove("fa-chevron-down");
+      icon.classList.add("fa-chevron-up");
+    }
+  } else {
+    body.style.display = "none";
+    if (icon) {
+      icon.classList.remove("fa-chevron-up");
+      icon.classList.add("fa-chevron-down");
+    }
+  }
+}
+
+
+// --- Fungsi hapus semua filter ---
+function hapusSemuaFilter() {
+  const damkarCheckbox = document.getElementById('filterDamkar');
+  if (damkarCheckbox) damkarCheckbox.checked = false;
+
+  // Kosongkan daftar kelurahan jika perlu
+  const kelurahanList = document.querySelector('.kelurahan-list');
+  if (kelurahanList) kelurahanList.innerHTML = '';
+
+  // Bisa tambahkan logika untuk hide marker dsb
+}
 
   function setupKelurahanCheckboxes(namaKecamatan) {
     const listContainer = document.querySelector('.kelurahan-list');
@@ -917,80 +1359,56 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
         listContainer.appendChild(checkboxHTML);
 
-        setTimeout(() => {
-            const checkbox = document.getElementById(safeId);
-            if (checkbox) {
-                checkbox.addEventListener('change', function (e) {
-                    const geojsonPath = `/geojson/${folder}/${encodeURIComponent(file)}`;
+        const checkbox = document.getElementById(safeId);
+        if (checkbox) {
+    checkbox.addEventListener('change', function (e) {
+        const geojsonPath = `/geojson/${folder}/${encodeURIComponent(file)}`;
 
-                    if (e.target.checked) {
-                        // 1. Sembunyikan semua kecamatan
-                        for (let nama in geojsonLayers) {
-                            map.removeLayer(geojsonLayers[nama]);
+        if (e.target.checked) {
+            // ✅ Jangan hapus layer kecamatan
+            // ✅ Jangan hapus kelurahan lain, biar bisa tampil bareng
+
+            // Tampilkan kelurahan yang dipilih
+            fetch(geojsonPath)
+                .then(res => res.json())
+                .then(data => {
+                    const layer = L.geoJSON(data, {
+                        filter: f => f.properties.WADMKK === "Kota Banjarmasin",
+                        style: {
+                            color: "#333",
+                            weight: 2.5,
+                            fillColor: color,
+                            fillOpacity: 0.5
                         }
+                    }).bindPopup(`<strong>${name}</strong>`);
 
-                        // 2. Sembunyikan kelurahan lain
-                        for (let f in kelurahanLayerMap) {
-                            map.removeLayer(kelurahanLayerMap[f]);
-                        }
+                    layer.addTo(map);
+                    kelurahanLayerMap[file] = layer;
 
-                        // 3. Tampilkan kelurahan yang dipilih
-                        if (!kelurahanLayerMap[file]) {
-                            fetch(geojsonPath)
-                                .then(res => res.json())
-                                .then(data => {
-                                    const layer = L.geoJSON(data, {
-                                        filter: function (feature) {
-                                            // 🔎 hanya tampilkan kelurahan yang ada di Kota Banjarmasin
-                                            return feature.properties.WADMKK === "Kota Banjarmasin";
-                                        },
-                                        style: { 
-                                                color: "#333333",     // garis tegas hitam/abu tua
-                                                weight: 2.5,          // agak tebal
-                                                fillColor: color,     // pakai warna dari kelurahanColors
-                                                fillOpacity: 0.5
-                                            }
-                                        }).bindPopup(`<strong>${name}</strong>`);
-
-                                    layer.addTo(map);
-                                    kelurahanLayerMap[file] = layer;
-
-                                    // Zoom ke kelurahan
-                                    const bounds = layer.getBounds();
-                                    if (bounds.isValid()) {
-                                        map.fitBounds(bounds, { padding: [30, 30], maxZoom: 16, animate: true });
-                                    } else {
-                                        map.setView([-3.3186, 114.5908], 14); // fallback
-                                    }
-                                })
-                                .catch(err => console.error(`Gagal memuat ${file}:`, err));
-                        } else {
-                            map.addLayer(kelurahanLayerMap[file]);
-                            map.fitBounds(kelurahanLayerMap[file].getBounds());
-                        }
-
-                    } else {
-                        // Kalau kelurahan di-uncheck → hapus layer kelurahan
-                        if (kelurahanLayerMap[file]) {
-                            map.removeLayer(kelurahanLayerMap[file]);
-                        }
-
-                        // Tampilkan lagi kecamatan besar
-                        if (geojsonLayers[namaKecamatan]) {
-                            map.addLayer(geojsonLayers[namaKecamatan]);
-                            // Zoom balik ke batas kecamatan
-                            map.fitBounds(geojsonLayers[namaKecamatan].getBounds());
-                        }
-                    }
-                });
+                    // ❌ Tidak perlu fitBounds
+                })
+                .catch(err => console.error(`Gagal memuat ${file}:`, err));
+        } else {
+            // Kelurahan di-uncheck → hapus layernya saja
+            if (kelurahanLayerMap[file]) {
+                map.removeLayer(kelurahanLayerMap[file]);
+                delete kelurahanLayerMap[file];
             }
-        }, 0);
+        }
     });
 }
 
-function toggleLayer() {
-  document.querySelector(".layer-card").classList.toggle("active");
+    });
+
+    // Tampilkan panel kelurahan otomatis saat 1 kecamatan dipilih
+    const kelurahanPanel = document.querySelector('.kelurahan-popup');
+    if(kelurahanPanel) kelurahanPanel.style.display = 'block';
 }
+
+function toggleLayer() {
+    document.querySelector(".layer-card").classList.toggle("active");
+}
+
 
 
   // --- Filter ikon damkar ---
@@ -1212,6 +1630,13 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+<script>
+  function toggleHelp() {
+  const popup = document.getElementById("helpPopup");
+  popup.style.display = (popup.style.display === "block") ? "none" : "block";
+}
+
+</script>
 
 
 <footer>

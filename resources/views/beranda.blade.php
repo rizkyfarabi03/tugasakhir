@@ -33,12 +33,59 @@
 
 
 <style>
+/* Bungkus utama supaya anak ketengah */
+.section-center {
+  display: flex;
+  justify-content: center; /* horizontal center */
+  text-align: center;      /* teks di dalam tetap rata tengah */
+  margin-bottom: 1.5rem;
+}
+
+/* Box dengan latar belakang hitam */
+.highlight-dark {
+  background: rgba(0,0,0,0.85);  /* hitam transparan */
+  padding: 20px 30px;
+  border-radius: 12px;
+  color: #fff;                   /* teks putih */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  max-width: 900px;              /* biar ga terlalu panjang */
+  width: 100%;
+}
+
+/* Judul */
+.highlight-dark h2 {
+  color: #28a745; /* hijau */
+  margin-bottom: 8px;
+}
+
+/* Subjudul */
+.highlight-dark p {
+  color: #f1f1f1;
+  font-size: 125%;
+  margin: 0;
+}
+
+.navbar-toggler {
+  z-index: 3001;
+  position: relative;
+}
+
+/* Supaya menu dropdown juga muncul di atas map */
+.navbar .dropdown-menu,
+.collapse.navbar-collapse {
+  position: relative;
+  z-index: 5001;
+}
+
+
   #map {
     height: 600px;
     margin: 30px auto; /* atas-bawah 30px, kiri-kanan center */
     max-width: 90%;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+     z-index: 1;
   }
 
   .leaflet-container:fullscreen {
@@ -295,50 +342,28 @@
 
         <!-- Beranda -->
         <li class="nav-item">
-          <a class="nav-link text-white login-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}" id="nav-beranda">
+          <a class="nav-link text-white login-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}" id="nav-beranda" title="Halaman awal aplikasi ini">
             Beranda
           </a>
         </li>
 
-        <!-- Dropdown Kecamatan -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-white login-link" href="#" id="kecamatanDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Wilayah
+        <!-- Menu Wilayah -->
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{ route('home') }}">
+            Wilayah
           </a>
-          <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="kecamatanDropdown" style="min-width: 250px; max-height: 400px; overflow-y: auto;">
-             
-             <!-- Tambahan checkbox untuk pilih semua -->
-            <hr>
-              <h6>Filter Wilayah Per Kecamatan</h6>
-
-              <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="wilayahSelectAll">
-                  <label class="form-check-label fw-bold" for="wilayahSelectAll">Pilih Semua</label>
-             </div>
-
-              <hr>
-              @foreach (['Barat', 'Selatan', 'Tengah', 'Timur', 'Utara'] as $kec)
-              <div class="form-check">
-                  <input class="form-check-input filter-wilayah" type="checkbox" value="Banjarmasin {{ $kec }}" id="wilayah{{ $kec }}">
-                  <label class="form-check-label" for="wilayah{{ $kec }}">Banjarmasin {{ $kec }}</label>
-              </div>
-              @endforeach
-              <hr>
-              <button class="btn btn-secondary btn-sm mt-3 w-100" id="resetBtn">Reset Semua</button>
-          </div>
         </li>
-
 
         <!-- Data Damkar -->
         <li class="nav-item">
-          <a class="nav-link text-white login-link {{ request()->routeIs('statistik.index') ? 'active' : '' }}" href="{{ route('statistik.index') }}" id="nav-damkar">
+          <a class="nav-link text-white login-link {{ request()->routeIs('statistik.index') ? 'active' : '' }}" href="{{ route('statistik.index') }}" id="nav-damkar" title="Akses untuk menuju statistik dan data anggota">
             Data Damkar
           </a>
         </li>
 
         <!-- Kontak -->
         <li class="nav-item">
-          <a class="nav-link text-white login-link" href="{{ url('/instagram') }}" target="_blank" rel="noopener noreferrer" id="nav-kontak">
+          <a class="nav-link text-white login-link" href="{{ url('/instagram') }}" target="_blank" rel="noopener noreferrer" id="nav-kontak" title="Akses untuk menuju sosmed disdamkardat">
             Kontak
           </a>
         </li>
@@ -350,19 +375,13 @@
           </a>
         </li> --}}
 
-        <!-- Lokasi Saya (Ikon Saja dengan Tooltip) -->
-        <li class="nav-item">
-          <button id="btn-lokasi" class="btn btn-success ms-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Lokasi Saya">
-            <i class="fas fa-map-marker-alt"></i>
-          </button>
-        </li>
-
+      
 
       </ul>
 
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link text-white login-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}" id="nav-login">
+          <a class="nav-link text-white login-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}" id="nav-login" title="Akses admin untuk mengelola data">
             Masuk
           </a>
         </li>
@@ -377,10 +396,15 @@
   <div id="particles-js"></div>
 
   <div class="container my-5 position-relative" style="z-index: 2;">
-    <div class="text-center mb-4">
-        <h2 class="fw-bold fade-in">SIG Pemadam Kebakaran Kota Banjarmasin</h2>
-        <p class="text-muted fade-in delay">Klik peta untuk melihat lokasi pos damkar dan detail wilayah</p>
+    <div class="section-center">
+  <div class="highlight-dark">
+      <h2 class="fw-bold fade-in">SIG Pemadam Kebakaran Kota Banjarmasin</h2>
+      <p class="fade-in delay">
+        Klik peta dibawah ini untuk melihat lokasi pos damkar dan detail wilayah
+      </p>
     </div>
+  </div>
+
 
     <div class="map-card mx-auto" style="max-width: 900px; cursor:pointer;"
          onclick="window.location.href='{{ route('home') }}'">

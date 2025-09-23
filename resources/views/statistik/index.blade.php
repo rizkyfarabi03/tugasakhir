@@ -138,6 +138,16 @@
           </a>
         </li>
 
+        <!-- Wilayah -->
+        <li class="nav-item">
+          <a class="nav-link text-white login-link {{ request()->routeIs('home') ? 'active' : '' }}"
+            href="{{ route('home') }}"
+            id="nav-beranda"
+            title="Halaman Icon Damkar dan Segmentasi Wilayah">
+            Wilayah
+          </a>
+        </li>
+
         <!-- Data Damkar -->
         <li class="nav-item">
           <a class="nav-link text-white login-link {{ request()->routeIs('statistik.index') ? 'active' : '' }}" href="{{ route('statistik.index') }}" id="nav-damkar">
